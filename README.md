@@ -40,6 +40,24 @@ This project demonstrates CRUD operations, clean architecture, and a modern resp
 
 ---
 
+
+## 🔄 Project Flow
+
+    ```mermaid
+    graph TD;
+        A[React Frontend] -->|Axios REST Calls| B(Spring Boot Backend);
+        B --> C[Service Layer];
+        C --> D[Repository Layer];
+        D --> E[MySQL Database];
+        E --> D;
+        D --> C;
+        C --> B;
+        B -->|JSON Response| A;
+
+
+
+---
+
 ### **Development Tools**
 - IntelliJ IDEA / VS Code  
 - Postman (API testing)  
@@ -49,54 +67,104 @@ This project demonstrates CRUD operations, clean architecture, and a modern resp
 
 ⚡ How to Run
 
-Backend
-Clone the repository:
-git clone https://github.com/your-username/ems-backend.git
+# ▶️ How to Run the Project  
 
-Configure database in application.properties:
-spring.datasource.url=jdbc:mysql://localhost:3306/ems
-spring.datasource.username=root
-spring.datasource.password=yourpassword
-spring.jpa.hibernate.ddl-auto=update
+## ✅ Prerequisites
+Make sure you have installed:  
+- [Java 21+](https://adoptium.net/)  
+- [Maven 3.9+](https://maven.apache.org/)  
+- [MySQL 8+](https://dev.mysql.com/downloads/mysql/)  
+- [Node.js 18+ & npm](https://nodejs.org/)  
+- [Git](https://git-scm.com/)  
 
+---
 
-Run the project:
-mvn spring-boot:run
+## ⚙️ Backend Setup (Spring Boot + MySQL)
 
-Backend runs on: http://localhost:8080
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/your-username/employeeopsx.git
+   cd employeeopsx/ems-backend
 
+2. **Configure Database**
+Create a new database in MySQL:
 
-Frontend
-Navigate to frontend folder:
-cd ems-frontend
-
-Install dependencies:
-npm install
-
-Run frontend:
-npm run dev
-
-Frontend runs on: http://localhost:3000
+    ```bash
+    CREATE DATABASE ems;
 
 
+**Update your application.properties with your MySQL username and password:**
+
+    ```bash
+    spring.datasource.url=jdbc:mysql://localhost:3306/ems
+    spring.datasource.username=root
+    spring.datasource.password=yourpassword
+    spring.jpa.hibernate.ddl-auto=update
+    spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect
+
+
+3. **Run the Backend**
+
+    ```bash
+    mvn spring-boot:run
+
+
+✅ Backend will start at: http://localhost:8080
+
+Test APIs with Postman:
+
+GET /api/employee → List employees
+
+POST /api/employee → Create employee
+
+PUT /api/employee/{id} → Update employee
+
+DELETE /api/employee/{id} → Delete employee
+
+
+
+Frontend Setup (React + Vite)
+
+1. **Go to frontend folder**
+
+    ```bash
+    cd ../ems-frontend
+
+
+2 **Install dependencies**
+
+    ```bash
+    npm install
+
+
+3. **Run the React App**
+
+    ```bash
+    npm run dev
+
+
+✅ React app runs at: http://localhost:3000
+
+
+🔄 End-to-End Flow
+
+Open http://localhost:3000
+
+You’ll see:
+
+Employee List Page (table with employees)
+
+Button ➕ Add Employee
+
+Actions: ✏️ Update | ❌ Delete
+
+All operations trigger Axios → Spring Boot → MySQL → React updates UI.
+
+
+---
 
 Contributions, issues, and feature requests are welcome!
 Feel free to fork the repo and submit a PR.
 
 
----
-
-
-## 🔄 Project Flow
-
-```mermaid
-graph TD;
-    A[React Frontend] -->|Axios REST Calls| B(Spring Boot Backend);
-    B --> C[Service Layer];
-    C --> D[Repository Layer];
-    D --> E[MySQL Database];
-    E --> D;
-    D --> C;
-    C --> B;
-    B -->|JSON Response| A;
 
